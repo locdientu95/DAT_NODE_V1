@@ -10,10 +10,7 @@ const verifyToken= require("./verify")
 //     res.status(200).json(user)
 // })
 
-router.get("/:a/:c",async (req, res) => {
-    let tai = req.params.tai
-    let phu = req.params.phu
-    console.log(tai,phu)
+router.get("/",async (req, res) => {
     const user = await authprocess.auth()
     res.status(200).json(user)
 })
