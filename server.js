@@ -2,6 +2,7 @@ const express = require("express") //khởi tạo server
 const cors = require("cors") //Phân quyền truy cập
 const auth = require("./route/auth")
 const device = require("./route/device")
+const file = require("./route/file")
 const app = express()
 const server = require("http").createServer(app) //Khai báo server
 server.listen(process.env.PORT || 3000)  // Khởi chạy server
@@ -16,5 +17,5 @@ app.use(cors({
 
 app.use("/",auth)   
 app.use("/device",device)   
-
+app.use("/file",file)
 
