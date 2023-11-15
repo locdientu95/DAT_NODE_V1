@@ -30,4 +30,26 @@ router.put("/ori", async (req, res) => {
   res.status(200).json(slider);
 });
 
+router.put("/color", async (req, res) => {
+  const thumb = req.body.thumb;
+  const thumbupdate = {
+    bgcolor: thumb.bgcolor,
+    border: thumb.border,
+  };
+  const track = req.body.track;
+  const trackupdate = {
+    bgcolor: track.bgcolor,
+    border: track.border,
+  };
+  const rail = req.body.rail;
+  const railupdate = { bgcolor: rail.bgcolor };
+
+  const slider = await sliderprocess.color(
+    thumbupdate,
+    trackupdate,
+    railupdate
+  );
+  res.status(200).json(slider);
+});
+
 module.exports = router;

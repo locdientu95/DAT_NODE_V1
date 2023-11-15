@@ -92,10 +92,31 @@ const ori = (ori) => {
   });
 };
 
+const color = (thumb, track, rail) => {
+  return new Promise(async (res, rej) => {
+    try {
+      await DB.Slider.findByIdAndUpdate("654c9e500e7b79ac12d4bbe9", {
+        thumb: thumb,
+        track: track,
+        rail: rail,
+      })
+        .then((data) => {
+          res({ status: true, data });
+        })
+        .catch((err) => {
+          rej({ status: false, mess: "ERR" });
+        });
+    } catch (error) {
+      rej({ status: false, mes: "SYS ERR" });
+    }
+  });
+};
+
 module.exports = {
   getAll,
   custom,
   min,
   max,
   ori,
+  color,
 };

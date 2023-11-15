@@ -12,7 +12,11 @@ app.use(express.urlencoded({ extended: true })); // Cấu hình express urlencod
 app.use(
   cors({
     credentials: true,
-    origin: ["http://172.16.0.204"],
+    origin: [
+      "http://172.16.0.204",
+      "http://172.16.0.169:81",
+      "http://172.16.0.144:81",
+    ],
   })
 );
 
