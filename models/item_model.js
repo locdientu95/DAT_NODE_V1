@@ -196,30 +196,30 @@ const barchartSchema = new mongoose.Schema({
     {
       value1: Number,
       value2: Number,
-      xAxis: "seriesB",
+      xAxis: String,
     },
     {
       value1: Number,
       value2: Number,
-      xAxis: "seriesC",
+      xAxis: String
     },
     {
       value1: Number,
       value2: Number,
-      xAxis: "seriesD",
+      xAxis: String
     },
   ],
-  w: "500",
-  h: "300",
-  labelsize: "10",
-  tickNumb: 5,
-  tickmaxstep: 5,
-  tickminstep: 2,
-  labelname: "Value",
-  valuecolor: "#008000",
-  series: "Series",
-  valuetitle: "value1",
-  chartnamefsize: "10px",
+  w: String,
+  h: String,
+  labelsize: String,
+  tickNumb: Number,
+  tickmaxstep: Number,
+  tickminstep: Number,
+  labelname: String,
+  valuecolor: String,
+  series: String,
+  valuetitle: String,
+  chartnamefsize: String,
 });
 
 registerSchema.pre("save", async function (next) {
@@ -242,7 +242,9 @@ registerSchema.methods.isCheckPassword = async function (password, next) {
     next(error);
   }
 };
-
+const barchart = mongoose.model("barchart", barchartSchema);
+const switchtoggle = mongoose.model("switchtoggle", switchtoggleSchema);
+const bardata = mongoose.model("bardata", bardataSchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -275,4 +277,7 @@ module.exports = {
   NumberH,
   Slider,
   Numbers,
+  bardata,
+  switchtoggle,
+  barchart,
 };
