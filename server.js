@@ -3,6 +3,7 @@ const cors = require("cors"); //Phân quyền truy cập
 const auth = require("./route/auth");
 const device = require("./route/device");
 const gauge = require("./route/gauge");
+const slider = require("./route/slider");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -18,3 +19,4 @@ app.use(
 app.use("/", auth);
 app.use("/device", device);
 app.use("/gauge", gauge);
+app.use("/slider", slider);
