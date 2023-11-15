@@ -3,6 +3,7 @@ const cors = require("cors"); //Phân quyền truy cập
 const auth = require("./route/auth");
 const device = require("./route/device");
 const gauge = require("./route/gauge");
+const tablepro = require("./route/tablepro");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -11,10 +12,11 @@ app.use(express.urlencoded({ extended: true })); // Cấu hình express urlencod
 app.use(
   cors({
     credentials: true,
-    origin: ["http://172.16.0.204"],
+    origin: ["http://172.16.0.169:81"],
   })
 );
 
 app.use("/", auth);
 app.use("/device", device);
 app.use("/gauge", gauge);
+app.use("/tablepro",tablepro)

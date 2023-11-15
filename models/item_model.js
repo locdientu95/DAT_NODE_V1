@@ -169,7 +169,13 @@ const gaugeSchema = new mongoose.Schema({
     filename: String
   })
   
-
+  const tablepro = new mongoose.Schema({
+    width: String,
+    data:{ id: Number, val_1: String },
+    head:{name:String, code:String},
+    row: Number,
+    col: Number
+  })
 registerSchema.pre('save', async function(next){
     try {
     const salt = await bcrypt.genSalt(10);
@@ -200,6 +206,8 @@ const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
 const FileUpload = mongoose.model("FileUpload",fileupload);
+const Tablepro = mongoose.model("Tablepro",tablepro);
+
 //mongoose.connect('mongodb+srv://huuhuynh:huu123@cluster0.jkueaoi.mongodb.net/DAT_Database?retryWrites=true&w=majority')
 mongoose.connect('mongodb://loctp:abc123@164.70.98.231:27017/admin')
 .then(()=>{
@@ -219,5 +227,6 @@ module.exports = {
     NumberH,
     Slider,
     Numbers,
-    FileUpload
+    FileUpload,
+    Tablepro
 }
