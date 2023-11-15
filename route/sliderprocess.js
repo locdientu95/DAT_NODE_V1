@@ -3,7 +3,7 @@ const DB = require("../models/item_model");
 const getAll = () => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Gauge.find({})
+      await DB.Slider.find({})
         .then((u) => {
           res({ status: true, data: u });
         })
@@ -16,13 +16,13 @@ const getAll = () => {
   });
 };
 
-const custom = (width, height, segment) => {
+const custom = (width, height, scale) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Gauge.findByIdAndUpdate("654b0212764d234c95975dca", {
+      await DB.Slider.findByIdAndUpdate("654c9e500e7b79ac12d4bbe9", {
         width: width,
         height: height,
-        segment: segment,
+        scale: scale,
       })
         .then((data) => {
           console.log(data);
@@ -38,50 +38,10 @@ const custom = (width, height, segment) => {
   });
 };
 
-const tit = (label, labelsize, labelcolor) => {
-  return new Promise(async (res, rej) => {
-    try {
-      await DB.Gauge.findByIdAndUpdate("654b0212764d234c95975dca", {
-        label: label,
-        labelsize: labelsize,
-        labelcolor: labelcolor,
-      })
-        .then((data) => {
-          res({ status: true, data });
-        })
-        .catch((err) => {
-          rej({ status: false, mess: "ERR" });
-        });
-    } catch (error) {
-      rej({ status: false, mes: "SYS ERR" });
-    }
-  });
-};
-
-const unit = (unit, valuesize, valuecolor) => {
-  return new Promise(async (res, rej) => {
-    try {
-      await DB.Gauge.findByIdAndUpdate("654b0212764d234c95975dca", {
-        unit: unit,
-        valuesize: valuesize,
-        valuecolor: valuecolor,
-      })
-        .then((data) => {
-          res({ status: true, data });
-        })
-        .catch((err) => {
-          rej({ status: false, mess: "ERR" });
-        });
-    } catch (error) {
-      rej({ status: false, mes: "SYS ERR" });
-    }
-  });
-};
-
 const min = (min) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Gauge.findByIdAndUpdate("654b0212764d234c95975dca", {
+      await DB.Slider.findByIdAndUpdate("654c9e500e7b79ac12d4bbe9", {
         min: min,
       })
         .then((data) => {
@@ -99,7 +59,7 @@ const min = (min) => {
 const max = (max) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Gauge.findByIdAndUpdate("654b0212764d234c95975dca", {
+      await DB.Slider.findByIdAndUpdate("654c9e500e7b79ac12d4bbe9", {
         max: max,
       })
         .then((data) => {
@@ -114,13 +74,11 @@ const max = (max) => {
   });
 };
 
-const color = (needlecolor, startcolor, endcolor) => {
+const ori = (ori) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Gauge.findByIdAndUpdate("654b0212764d234c95975dca", {
-        needlecolor: needlecolor,
-        startcolor: startcolor,
-        endcolor: endcolor,
+      await DB.Slider.findByIdAndUpdate("654c9e500e7b79ac12d4bbe9", {
+        ori: ori,
       })
         .then((data) => {
           res({ status: true, data });
@@ -137,9 +95,7 @@ const color = (needlecolor, startcolor, endcolor) => {
 module.exports = {
   getAll,
   custom,
-  tit,
-  unit,
   min,
   max,
-  color,
+  ori,
 };

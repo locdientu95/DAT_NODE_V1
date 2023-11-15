@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const barchart = require("./barchartprocess");
+const barchartprocess = require("./barchartprocess");
 
 router.get("/", async (req, res) => {
     const data = await barchartprocess.barchart();

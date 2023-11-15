@@ -3,7 +3,7 @@ const MD = require("../models/item_model");
 const switchtoggle = () => {
     return new Promise(async (res, rej) => {
         try {
-            await MD.SwitchToggle.find({})
+            await MD.switchtoggle.find({})
             .then((data)=>{
                 res({status:true, data:data})
             })

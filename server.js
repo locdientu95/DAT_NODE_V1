@@ -6,6 +6,7 @@ const gauge = require("./route/gauge");
 const bardata = require("./route/bardata");
 const switchtoggle = require("./route/switchtoggle");
 const barchart = require("./route/barchart");
+const slider = require("./route/slider");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true })); // Cấu hình express urlencod
 app.use(
   cors({
     credentials: true,
-    origin: ["http://172.16.0.204"],
+    origin: ["http://172.16.0.204","http://172.16.0.144"],
   })
 );
 
@@ -24,3 +25,4 @@ app.use("/gauge", gauge);
 app.use("/bardata", bardata);
 app.use("/switchtoggle", switchtoggle);
 app.use("/barchart", barchart);
+app.use("/slider", slider);
