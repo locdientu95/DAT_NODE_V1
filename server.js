@@ -25,6 +25,8 @@ app.use(
 
   })
 );
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 
 app.use("/", auth);
 app.use("/device", device);

@@ -208,8 +208,8 @@ const Gauge = mongoose.model("Gauge", gaugeSchema);
 const FileUpload = mongoose.model("FileUpload",fileupload);
 const Tablepro = mongoose.model("Tablepro",tablepro);
 
-//mongoose.connect('mongodb+srv://huuhuynh:huu123@cluster0.jkueaoi.mongodb.net/DAT_Database?retryWrites=true&w=majority')
-mongoose.connect('mongodb://loctp:abc123@164.70.98.231:27017/admin')
+
+ let con = mongoose.connect('mongodb://loctp:abc123@164.70.98.231:27017/admin')
 .then(()=>{
     console.log("MD connected")
 }).catch((error)=>{
@@ -228,5 +228,6 @@ module.exports = {
     Slider,
     Numbers,
     FileUpload,
-    Tablepro
+    Tablepro,
+    con
 }
