@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Grid = require('gridfs-stream')
 const bcrypt = require("bcrypt");
 const registerSchema = new mongoose.Schema(
   {
@@ -203,15 +204,17 @@ const Gauge = mongoose.model("Gauge", gaugeSchema);
 const FileUpload = mongoose.model("FileUpload", fileupload);
 const Tablepro = mongoose.model("Tablepro", tablepro);
 
+const mongoURI = 'mongodb://loctp:abc123@164.70.98.231:27017/admin';
 //mongoose.connect('mongodb+srv://huuhuynh:huu123@cluster0.jkueaoi.mongodb.net/DAT_Database?retryWrites=true&w=majority')
-mongoose
-  .connect("mongodb://loctp:abc123@164.70.98.231:27017/admin")
-  .then(() => {
-    console.log("MD connected");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+const conn = mongoose.createConnection(mongoURI)
+
+
+let gfs;
+conn.once('open', () => {
+    // Init stream
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('uploads');
+});
 
 module.exports = {
   Register,
@@ -225,4 +228,8 @@ module.exports = {
   Numbers,
   FileUpload,
   Tablepro,
+  conn,
+  gfs,
+  mongoURI
+
 };

@@ -1,46 +1,73 @@
 const router = require("express").Router()
+const multer = require('multer')
+const crypto = require('crypto')
+const { GridFsStorage } = require('multer-gridfs-storage')
+const MD = require("../models/item_model")
+const path = require('path')
 const fileprocess = require("./fileprocess")
-const multer = require("multer")
 
-const fs = require('fs'); 
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now()
-      cb(null, file.originalname)
-    }
-  })
+
+
+
+const storage = new GridFsStorage({
+  url: MD.mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+const test = multer.memoryStorage({storage})
+
+
+router.post('/upload', upload.single('file'), (req, res) => {
+  res.json({ file: req.file });
   
-  const upload = multer({ storage: storage })
-
-router.post("/upload",upload.single("file"),async(req,res)=>{
-    
-    const fileName = await fileprocess.upload(req.file.filename)
-    await fileprocess.findAndReplace2(req.file.filename)
-    res.status(200).json({message:"ok"})
-    
-})
+});
 
 
-router.get("/file",async(req,res)=>{
+router.get('/files/:filename', async (req, res) => {
+  try {
+    const file = await MD.gfs.files.findOne({ filename: req.params.filename });
+    if (!file) {
+      return res.status(404).json({
+        err: 'No file exists',
+      });
+    }
 
-  const path = 'C:/HSU/TTTN/DAT/MongoDB/TestD1/uploads/out.xlsx';  
-  const filePath = fs.createWriteStream(path); 
-  res.pipe(filePath); 
-  filePath.on('finish',() => { 
-      filePath.close(); 
-      console.log('Download Completed');  
-  }) 
+    const fileId = file._id; // Không cần phải chuyển thành ObjectId
+    const bucket = new mongoose.mongo.GridFSBucket(MD.conn.db, {
+      bucketName: 'uploads', // Đảm bảo rằng đây là tên bucket đúng
+    });
+    const downloadStream = bucket.openDownloadStream(fileId);
 
-})
+    downloadStream.on('error', (error) => {
+      console.error('Error downloading file:', error.message);
+      res.status(500).json({
+        err: 'Internal Server Error',
+      });
+    });
 
-router.post("/read",async(req,res)=>{
-    const file = await fileprocess.read(req.body.name)
-    res.status(200).json({file})
-})
+    downloadStream.pipe(res);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      err: 'Internal Server Error',
+    });
+  }
+});
 
 
 

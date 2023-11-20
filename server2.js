@@ -24,6 +24,7 @@ const path= require('path')
 const crypto = require('crypto')
 const mongoose = require('mongoose')
 const Grid = require('gridfs-stream')
+const { GridFSBucket } = require('mongodb');
 
 
 
@@ -73,34 +74,108 @@ app.post('/upload', upload.single('file'), (req, res) => {
   });
 
 
-  app.get('/files', (req, res) => {
-    gfs.files.find().toArray((err, files) => {
+  app.get('/files', async (req, res) => {
+    try {
+      const files = await gfs.files.find({}).toArray();
       // Check if files
       if (!files || files.length === 0) {
         return res.status(404).json({
           err: 'No files exist'
         });
       }
-  
       // Files exist
       return res.json(files);
-    });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+        err: 'Internal Server Error'
+      });
+    }
   });
 
-  app.get('/files/:filename', (req, res) => {
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-      // Check if file
-      if (!file || file.length === 0) {
-        return res.status(404).json({
-          err: 'No file exists'
-        });
-      }
-      // File exists
-      return res.json(file);
+
+  // app.get('/files/:filename', async(req, res) => {
+  //   const files = await gfs.files.findOne({ filename: req.params.filename })
+  //     // Check if file
+  //     if (!files || files.length === 0) {
+  //       return res.status(404).json({
+  //         err: 'No file exists'
+  //       });
+  //     }
+  //     // File exists
+  //     return res.json(files);
+    
+  // });
+
+
+
+// Code chạy dc
+
+
+
+
+// const { ObjectId } = mongoose.Types;
+
+// app.get('/files/:filename', async (req, res) => {
+//   try {
+//     const file = await gfs.files.findOne({ filename: req.params.filename });
+//     if (!file || file.length === 0) {
+//       return res.status(404).json({
+//         err: 'No file exists',
+//       });
+//     }
+
+//     const bucket = new mongoose.mongo.GridFSBucket(conn.db);
+//     const downloadStream = bucket.openDownloadStream(file._id);
+
+//     downloadStream.on('error', (error) => {
+//       console.error('Error downloading file:', error.message);
+//       res.status(500).json({
+//         err: 'Hello',
+//       });
+//     });
+
+//     downloadStream.pipe(res);
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({
+//       err: 'Internal Server Error',
+//     });
+//   }
+// });
+
+app.get('/files/:filename', async (req, res) => {
+  try {
+    const file = await MD.gfs.files.findOne({ filename: req.params.filename });
+    if (!file) {
+      return res.status(404).json({
+        err: 'No file exists',
+      });
+    }
+
+    const fileId = file._id; // Không cần phải chuyển thành ObjectId
+    const bucket = new mongoose.mongo.GridFSBucket(conn.db, {
+      bucketName: 'uploads', // Đảm bảo rằng đây là tên bucket đúng
     });
-  });
-  
- 
-  const port = 5000;
+    const downloadStream = bucket.openDownloadStream(fileId);
+
+    downloadStream.on('error', (error) => {
+      console.error('Error downloading file:', error.message);
+      res.status(500).json({
+        err: 'Internal Server Error',
+      });
+    });
+
+    downloadStream.pipe(res);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      err: 'Internal Server Error',
+    });
+  }
+});
+
+
+const port = 5000;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
