@@ -21,13 +21,13 @@ app.use(
     origin: [
       "http://172.16.0.204",
       "http://172.16.0.169:81",
-      "http://172.16.0.144:80",
+      "http://172.16.0.144:81",
       "http://172.16.0.66",
     ],
   })
 );
-const methodOverride = require('method-override')
-app.use(methodOverride('_method'))
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
 
 app.use("/", auth);
 app.use("/file",file)
