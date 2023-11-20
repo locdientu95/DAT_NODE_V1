@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server2.js"
+    "start": "nodemon server.js"
   },
   "resolutions": {
     "multer-gridfs-storage/mongodb": "^5.9.1"
