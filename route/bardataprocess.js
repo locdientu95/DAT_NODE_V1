@@ -16,6 +16,13 @@ const bardata = () => {
     })
 }
 
+const saveChange1 = () => {
+    return new Promise(async (res, rej) => {
+        
+    })
+}
+
 module.exports = {
     bardata,
+    saveChange1,
 }
