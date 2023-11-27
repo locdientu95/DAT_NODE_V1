@@ -8,7 +8,7 @@ const switchtoggle = require("./route/switchtoggle");
 const barchart = require("./route/barchart");
 const slider = require("./route/slider");
 const tablepro = require("./route/tablepro");
-const file = require("./route/file")
+const file = require("./route/file");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -30,7 +30,7 @@ const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
 app.use("/", auth);
-app.use("/file",file)
+app.use("/file", file);
 app.use("/device", device);
 app.use("/gauge", gauge);
 app.use("/bardata", bardata);
