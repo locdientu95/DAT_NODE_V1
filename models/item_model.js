@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Grid = require('gridfs-stream')
 const bcrypt = require("bcrypt");
 const registerSchema = new mongoose.Schema(
   {
@@ -157,9 +156,6 @@ const numbervSchema = new mongoose.Schema({
   ],
 });
 
-const fileupload = new mongoose.Schema({
-  filename: String,
-});
 
 const tablepro = new mongoose.Schema({
   width: String,
@@ -189,6 +185,10 @@ registerSchema.methods.isCheckPassword = async function (password, next) {
   }
 };
 
+const imageupload = new mongoose.Schema({
+  image:String
+})
+
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -201,20 +201,19 @@ const Numbers = mongoose.model("Number", numberSchema);
 const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
-const FileUpload = mongoose.model("FileUpload", fileupload);
 const Tablepro = mongoose.model("Tablepro", tablepro);
+const ImageUpload = mongoose.model("ImageUpload",imageupload)
+// const mongoURI = 'mongodb://loctp:abc123@164.70.98.231:27017/admin';
+mongoose.connect('mongodb://loctp:abc123@164.70.98.231:27017/admin')
+// const conn = mongoose.createConnection(mongoURI)
 
-const mongoURI = 'mongodb://loctp:abc123@164.70.98.231:27017/admin';
-//mongoose.connect('mongodb+srv://huuhuynh:huu123@cluster0.jkueaoi.mongodb.net/DAT_Database?retryWrites=true&w=majority')
-const conn = mongoose.createConnection(mongoURI)
 
-
-let gfs;
-conn.once('open', () => {
-    // Init stream
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('uploads');
-});
+// let gfs;
+// conn.once('open', () => {
+//     // Init stream
+//     gfs = Grid(conn.db, mongoose.mongo);
+//     gfs.collection('uploads');
+// });
 
 module.exports = {
   Register,
@@ -226,10 +225,6 @@ module.exports = {
   NumberH,
   Slider,
   Numbers,
-  FileUpload,
+  ImageUpload,
   Tablepro,
-  conn,
-  gfs,
-  mongoURI
-
 };
