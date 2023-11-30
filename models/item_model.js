@@ -159,8 +159,8 @@ const numbervSchema = new mongoose.Schema({
 
 const tablepro = new mongoose.Schema({
   width: String,
-  data: { id: Number, val_1: String },
-  head: { name: String, code: String },
+  data: [{ id: Number, val_1: String }],
+  head: [{ name: String, code: String }],
   row: Number,
   col: Number,
 });

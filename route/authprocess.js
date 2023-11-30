@@ -26,7 +26,6 @@ const addUser = (username,password,email,name,role) => {
             }
             let user = new MD.Register({username:username,password:password,email:email,name:name,role:role})
             user.save()
-
                 .then((data) => {
                     res({ status: true })
                 })
