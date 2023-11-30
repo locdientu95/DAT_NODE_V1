@@ -8,13 +8,15 @@ const switchtoggle = require("./route/switchtoggle");
 const barchart = require("./route/barchart");
 const slider = require("./route/slider");
 const tablepro = require("./route/tablepro");
-const image = require("./route/image")
+const image = require("./route/image");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: "50mb" }));
 //app.use(express.json()); // Cấu hình express kiểu JSON
-app.use(express.urlencoded({ extended: true,limit: '50mb',parameterLimit: 50000 })); // Cấu hình express urlencoded
+app.use(
+  express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 50000 })
+); // Cấu hình express urlencoded
 app.use(
   cors({
     credentials: true,
@@ -24,7 +26,7 @@ app.use(
       "http://172.16.0.169:81",
       "http://172.16.0.144:81",
       "http://172.16.0.66",
-      "http://172.16.0.169"
+      "http://172.16.0.169",
     ],
   })
 );
@@ -39,4 +41,4 @@ app.use("/tablepro", tablepro);
 app.use("/switchtoggle", switchtoggle);
 app.use("/barchart", barchart);
 app.use("/slider", slider);
-app.use("/image",image)
+app.use("/image", image);

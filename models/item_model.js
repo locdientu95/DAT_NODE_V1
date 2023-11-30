@@ -24,6 +24,9 @@ const registerSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    avatar: {
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -156,7 +159,6 @@ const numbervSchema = new mongoose.Schema({
   ],
 });
 
-
 const tablepro = new mongoose.Schema({
   width: String,
   data: [{ id: Number, val_1: String }],
@@ -186,8 +188,8 @@ registerSchema.methods.isCheckPassword = async function (password, next) {
 };
 
 const imageupload = new mongoose.Schema({
-  image:String
-})
+  image: String,
+});
 
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
@@ -202,11 +204,10 @@ const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
 const Tablepro = mongoose.model("Tablepro", tablepro);
-const ImageUpload = mongoose.model("ImageUpload",imageupload)
+const ImageUpload = mongoose.model("ImageUpload", imageupload);
 // const mongoURI = 'mongodb://loctp:abc123@164.70.98.231:27017/admin';
-mongoose.connect('mongodb://loctp:abc123@164.70.98.231:27017/admin')
+mongoose.connect("mongodb://loctp:abc123@164.70.98.231:27017/admin");
 // const conn = mongoose.createConnection(mongoURI)
-
 
 // let gfs;
 // conn.once('open', () => {
