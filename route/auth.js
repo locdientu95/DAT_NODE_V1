@@ -26,9 +26,27 @@ router.post("/addUser", async (req, res) => {
   res.status(200).json(user);
 });
 
+router.post("/uploads", async (req, res) => {
+  const upload = await authprocess.upload(req.body.base64);
+  res.status(200).json("Success");
+});
+
 router.post("/Login", async (req, res) => {
   const user = await authprocess.Login(req.body.username, req.body.password);
   res.status(200).json(user);
+});
+
+router.post("/UpdateImage", async (req, res) => {
+  const user = await authprocess.UpdateImage(
+    req.body.username,
+    req.body.base64
+  );
+  res.status(200).json(user);
+});
+
+router.post("/getimg", async (req, res) => {
+  const img = await authprocess.getImage(req.body.username);
+  res.status(200).json(img);
 });
 
 module.exports = router;

@@ -24,6 +24,9 @@ const registerSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    avatar: {
+      type: String,
+    },
   },
   {
     timestamps: true,
