@@ -28,6 +28,7 @@ app.use(
       "http://172.16.0.66",
       "http://172.16.0.169",
       "http://iot-dev.datgroup.com.vn:3700",
+      "http://192.168.1.23",
     ],
   })
 );
