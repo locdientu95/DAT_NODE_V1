@@ -136,7 +136,6 @@ const Login = (username, pass) => {
         .then(async (user) => {
           if (user) {
             let isValid = await bcrypt.compare(pass, user.password);
-
             if (!isValid) {
               resolve({ status: false, mes: "Sai mật khẩu" });
             } else {
@@ -187,7 +186,7 @@ const UpdateImage = (username, base64) => {
       )
         .then((user) => {
           if (user) {
-            resolve({ status: true });
+            resolve({ status: true , data:user});
           } else {
             resolve({ status: false });
           }
@@ -204,17 +203,16 @@ const UpdateImage = (username, base64) => {
 const getImage = (username) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(username);
       await MD.Register.findOne({ username: username })
         .then((user) => {
           if (user) {
-            resolve({ status: true, data: user });
+            resolve({ status: true, data:user });
           } else {
-            resolve({ status: false, mes: "false cc" });
+            resolve({ status: false });
           }
         })
         .catch((err) => {
-          reject({ status: false, mes: "false cl" });
+          reject({ status: false });
         });
     } catch (error) {
       reject({ status: false, mes: "ERR" });
