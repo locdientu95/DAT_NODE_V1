@@ -91,8 +91,7 @@ const sliderSchema = new mongoose.Schema({
 const lampSchema = new mongoose.Schema({
   value: Number,
   data: {
-    0: { text: String, color: String, bgcolor: String },
-    1: { text: String, color: String, bgcolor: String },
+    type: Object,
   },
   width: String,
   height: String,

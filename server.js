@@ -9,6 +9,8 @@ const barchart = require("./route/barchart");
 const slider = require("./route/slider");
 const tablepro = require("./route/tablepro");
 const image = require("./route/image");
+const number = require("./route/number");
+const lamp = require("./route/lamp");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -29,6 +31,7 @@ app.use(
       "http://172.16.0.169",
       "http://iot-dev.datgroup.com.vn:3700",
       "http://192.168.1.23",
+      "http://172.16.0.40",
     ],
   })
 );
@@ -44,3 +47,5 @@ app.use("/switchtoggle", switchtoggle);
 app.use("/barchart", barchart);
 app.use("/slider", slider);
 app.use("/image", image);
+app.use("/number", number);
+app.use("/lamp", lamp);
