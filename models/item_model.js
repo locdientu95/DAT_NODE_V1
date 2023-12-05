@@ -156,72 +156,17 @@ const numbervSchema = new mongoose.Schema({
   ],
 });
 
-const bardataSchema = new mongoose.Schema({
-  id: Number,
-  min: String,
-  max: String,
-  color: String,
-  scale: Number,
-  realdata: Number,
-  type: String,
-  w: String,
-  h: String,
-  bgcolor: String,
-  realdatacolor: String,
+const fileupload = new mongoose.Schema({
+  filename: String,
 });
 
-const switchtoggleSchema = new mongoose.Schema({
-  texton: String,
-  textoff: String,
-  bgon: String,
-  bgoff: String,
-  txtcoloron: String,
-  txtcoloroff: String,
-  textsize: Number,
-  w: String,
-  h: String,
-  border: String,
-  borderradius: String,
-  bordercolor: String,
-  borderradiusicon: String,
+const tablepro = new mongoose.Schema({
+  width: String,
+  data: { id: Number, val_1: String },
+  head: { name: String, code: String },
+  row: Number,
+  col: Number,
 });
-
-const barchartSchema = new mongoose.Schema({
-  dataset: [
-    {
-      value1: Number,
-      value2: Number,
-      xAxis: String,
-    },
-    {
-      value1: Number,
-      value2: Number,
-      xAxis: String,
-    },
-    {
-      value1: Number,
-      value2: Number,
-      xAxis: String
-    },
-    {
-      value1: Number,
-      value2: Number,
-      xAxis: String
-    },
-  ],
-  w: String,
-  h: String,
-  labelsize: String,
-  tickNumb: Number,
-  tickmaxstep: Number,
-  tickminstep: Number,
-  labelname: String,
-  valuecolor: String,
-  series: String,
-  valuetitle: String,
-  chartnamefsize: String,
-});
-
 registerSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -242,9 +187,7 @@ registerSchema.methods.isCheckPassword = async function (password, next) {
     next(error);
   }
 };
-const barchart = mongoose.model("barchart", barchartSchema);
-const switchtoggle = mongoose.model("switchtoggle", switchtoggleSchema);
-const bardata = mongoose.model("bardata", bardataSchema);
+
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -257,6 +200,9 @@ const Numbers = mongoose.model("Number", numberSchema);
 const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
+const FileUpload = mongoose.model("FileUpload", fileupload);
+const Tablepro = mongoose.model("Tablepro", tablepro);
+
 //mongoose.connect('mongodb+srv://huuhuynh:huu123@cluster0.jkueaoi.mongodb.net/DAT_Database?retryWrites=true&w=majority')
 mongoose
   .connect("mongodb://loctp:abc123@164.70.98.231:27017/admin")
@@ -277,7 +223,6 @@ module.exports = {
   NumberH,
   Slider,
   Numbers,
-  bardata,
-  switchtoggle,
-  barchart,
+  FileUpload,
+  Tablepro,
 };
