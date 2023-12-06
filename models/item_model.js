@@ -91,8 +91,7 @@ const sliderSchema = new mongoose.Schema({
 const lampSchema = new mongoose.Schema({
   value: Number,
   data: {
-    0: { text: String, color: String, bgcolor: String },
-    1: { text: String, color: String, bgcolor: String },
+    type: Object,
   },
   width: String,
   height: String,
@@ -161,8 +160,14 @@ const numbervSchema = new mongoose.Schema({
 
 const tablepro = new mongoose.Schema({
   width: String,
-  data: { id: Number, val_1: String },
-  head: { name: String, code: String },
+  data: 
+    {
+      type: Array
+    },
+  head: 
+  {
+    type: Array
+  },
   row: Number,
   col: Number,
 });
