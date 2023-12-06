@@ -24,6 +24,9 @@ const registerSchema = new mongoose.Schema(
       type: String,
       default: "user",
     },
+    avatar: {
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -156,10 +159,6 @@ const numbervSchema = new mongoose.Schema({
   ],
 });
 
-const fileupload = new mongoose.Schema({
-  filename: String,
-});
-
 const tablepro = new mongoose.Schema({
   width: String,
   data: { id: Number, val_1: String },
@@ -188,6 +187,10 @@ registerSchema.methods.isCheckPassword = async function (password, next) {
   }
 };
 
+const imageupload = new mongoose.Schema({
+  image: String,
+});
+
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -200,18 +203,18 @@ const Numbers = mongoose.model("Number", numberSchema);
 const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
-const FileUpload = mongoose.model("FileUpload", fileupload);
 const Tablepro = mongoose.model("Tablepro", tablepro);
+const ImageUpload = mongoose.model("ImageUpload", imageupload);
+// const mongoURI = 'mongodb://loctp:abc123@164.70.98.231:27017/admin';
+mongoose.connect("mongodb://loctp:abc123@164.70.98.231:27017/admin");
+// const conn = mongoose.createConnection(mongoURI)
 
-//mongoose.connect('mongodb+srv://huuhuynh:huu123@cluster0.jkueaoi.mongodb.net/DAT_Database?retryWrites=true&w=majority')
-mongoose
-  .connect("mongodb://loctp:abc123@164.70.98.231:27017/admin")
-  .then(() => {
-    console.log("MD connected");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// let gfs;
+// conn.once('open', () => {
+//     // Init stream
+//     gfs = Grid(conn.db, mongoose.mongo);
+//     gfs.collection('uploads');
+// });
 
 module.exports = {
   Register,
@@ -223,6 +226,6 @@ module.exports = {
   NumberH,
   Slider,
   Numbers,
-  FileUpload,
+  ImageUpload,
   Tablepro,
 };

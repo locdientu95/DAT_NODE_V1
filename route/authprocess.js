@@ -1,45 +1,69 @@
-const MD = require("../models/item_model")
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
-
+const MD = require("../models/item_model");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const auth = () => {
-    return new Promise(async(res, rej) => {
-        try {
-            await MD.Register.find({})
-            .then((data)=>{
-                res({status:true, data:data})
-            })
-            .catch((err)=>{
-                rej({status:false})
-            })
-        } catch (error) {
-            rej({status:false,mes:"ERR"})
-        }
-    })
-}
-const addUser = (username,password,email,name,role) => {
-    return new Promise(async (res, rej) => {
-        try {
-            if (role==null || role !="admin"){
-                role="user"
-            }
-            let user = new MD.Register({username:username,password:password,email:email,name:name,role:role})
-            user.save()
+  return new Promise(async (res, rej) => {
+    try {
+      await MD.Register.find({})
+        .then((data) => {
+          res({ status: true, data: data });
+        })
+        .catch((err) => {
+          rej({ status: false });
+        });
+    } catch (error) {
+      rej({ status: false, mes: "ERR" });
+    }
+  });
+};
 
-                .then((data) => {
-                    res({ status: true })
-                })
+const addUser = (username, password, email, name, role) => {
+  return new Promise(async (res, rej) => {
+    try {
+      if (role == null || role != "admin") {
+        role = "user";
+      }
+      let user = new MD.Register({
+        username: username,
+        password: password,
+        email: email,
+        name: name,
+        role: role,
+      });
+      user
+        .save()
 
-                .catch((err) => {
-                    rej({ status: false, mes: "DB ERR" })
-                })
+        .then((data) => {
+          res({ status: true });
+        })
 
-        } catch (error) {
-            rej({ status: false, mes: "err" })
-        }
-    })
-}
+        .catch((err) => {
+          rej({ status: false, mes: "DB ERR" });
+        });
+    } catch (error) {
+      rej({ status: false, mes: "err" });
+    }
+  });
+};
+
+const upload = (base64) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const img = await MD.Register.create({ image: base64 })
+        .then((img) => {
+          if (img) {
+            resolve({ status: true });
+          }
+        })
+        .catch((err) => {
+          resolve({ status: false });
+        });
+    } catch (error) {
+      reject({ status: false, ERR: error });
+    }
+  });
+};
 
 // const Login = async (name, pass) => {
 //     try {
@@ -106,49 +130,103 @@ const addUser = (username,password,email,name,role) => {
 // };
 
 const Login = (username, pass) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-             await MD.Register.findOne({ username: username })
-                .then(async (user) => {
-                    console.log(user)
-                    if (user) {
-                        let isValid = await bcrypt.compare(pass, user.password)
-                        console.log(isValid)
-                        if (!isValid) {
-                            resolve({ status: false, mes: "Sai mật khẩu" })
-                        } else {
-                          const token =  jwt.sign({
-                                id:user.username,
-                                admin: user.role
-                            },
-                            "MySecretKey",
-                            {expiresIn:"10s"}
-                            );
-                            const refreshToken = jwt.sign({
-                                id:user.username,
-                                admin: user.role
-                            },
-                            "MyRefreshSecretKey",
-                            {expiresIn:"30d"}
-                            )
-                             const {password,...others} = user._doc;
-                            resolve({ status: true, mes: "Đăng nhập thành công", ...others, token:token,rft:refreshToken })
-                        }
-                    } else {
-                        resolve({ status: false, mes: "Không có username này" })
-                    }
-                })
-                .catch((err) => {
-                    reject({ status: false, mes: "DB ERR" })
-                })
-            } catch (error) {
-            reject({status:false, mes:err})
+  return new Promise(async (resolve, reject) => {
+    try {
+      await MD.Register.findOne({ username: username })
+        .then(async (user) => {
+          if (user) {
+            let isValid = await bcrypt.compare(pass, user.password);
+
+            if (!isValid) {
+              resolve({ status: false, mes: "Sai mật khẩu" });
+            } else {
+              const token = jwt.sign(
+                {
+                  id: user.username,
+                  admin: user.role,
+                },
+                "MySecretKey",
+                { expiresIn: "10s" }
+              );
+              const refreshToken = jwt.sign(
+                {
+                  id: user.username,
+                  admin: user.role,
+                },
+                "MyRefreshSecretKey",
+                { expiresIn: "30d" }
+              );
+              const { password, ...others } = user._doc;
+              resolve({
+                status: true,
+                mes: "Đăng nhập thành công",
+                ...others,
+                token: token,
+                rft: refreshToken,
+              });
             }
-    })
-}
+          } else {
+            resolve({ status: false, mes: "Không có username này" });
+          }
+        })
+        .catch((err) => {
+          reject({ status: false, mes: "DB ERR" });
+        });
+    } catch (error) {
+      reject({ status: false, mes: err });
+    }
+  });
+};
+
+const UpdateImage = (username, base64) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await MD.Register.findOneAndUpdate(
+        { username: username },
+        { avatar: base64 }
+      )
+        .then((user) => {
+          if (user) {
+            resolve({ status: true });
+          } else {
+            resolve({ status: false });
+          }
+        })
+        .catch((err) => {
+          reject({ status: false });
+        });
+    } catch (error) {
+      reject({ status: false, mes: "ERR" });
+    }
+  });
+};
+
+const getImage = (username) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log(username);
+      await MD.Register.findOne({ username: username })
+        .then((user) => {
+          if (user) {
+            resolve({ status: true, data: user });
+          } else {
+            resolve({ status: false, mes: "false cc" });
+          }
+        })
+        .catch((err) => {
+          reject({ status: false, mes: "false cl" });
+        });
+    } catch (error) {
+      reject({ status: false, mes: "ERR" });
+    }
+  });
+};
 
 module.exports = {
-    auth,
-    addUser,
-    Login
-}
+  auth,
+  addUser,
+  Login,
+  upload,
+  UpdateImage,
+  getImage,
+};
