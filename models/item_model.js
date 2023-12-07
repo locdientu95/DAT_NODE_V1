@@ -89,9 +89,14 @@ const sliderSchema = new mongoose.Schema({
 });
 
 const lampSchema = new mongoose.Schema({
-  value: Number,
+  value: String,
   data: {
-    type: Object,
+    index: Number,
+    index: {
+      text: String,
+      color: String,
+      bgcolor: String,
+    },
   },
   width: String,
   height: String,
@@ -160,17 +165,16 @@ const numbervSchema = new mongoose.Schema({
 
 const tablepro = new mongoose.Schema({
   width: String,
-  data: 
-    {
-      type: Array
-    },
-  head: 
-  {
-    type: Array
+  data: {
+    type: Array,
+  },
+  head: {
+    type: Array,
   },
   row: Number,
   col: Number,
 });
+
 registerSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
