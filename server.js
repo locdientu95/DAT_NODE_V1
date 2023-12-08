@@ -13,6 +13,7 @@ const number = require("./route/number");
 const lamp = require("./route/lamp");
 const numberh = require("./route/numberh");
 const numberv = require("./route/numberv");
+const history = require("./route/history")
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -55,3 +56,4 @@ app.use("/number", number);
 app.use("/lamp", lamp);
 app.use("/numberh", numberh);
 app.use("/numberv", numberv);
+app.use("/history",history)

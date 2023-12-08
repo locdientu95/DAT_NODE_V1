@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { type } = require("../route/numberprocess");
 const registerSchema = new mongoose.Schema(
   {
     username: {
@@ -197,6 +198,21 @@ const imageupload = new mongoose.Schema({
   image: String,
 });
 
+const historySchema = new mongoose.Schema({
+  id: String,
+  code: String,
+  data:
+  [
+    {
+      time: String,
+      val_1: String,
+      val_2: String,
+      val_3:String
+    }
+  ],
+  date: String,
+})
+const History = mongoose.model("History",historySchema)
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -234,4 +250,5 @@ module.exports = {
   Numbers,
   ImageUpload,
   Tablepro,
+  History
 };
