@@ -35,11 +35,13 @@ const addUser = (username, password, email, name, role) => {
         .save()
 
         .then((data) => {
+          console.log(data)
           res({ status: true });
         })
 
         .catch((err) => {
-          rej({ status: false, mes: "DB ERR" });
+          console.log(err)
+          rej({ status: false });
         });
     } catch (error) {
       rej({ status: false, mes: "err" });

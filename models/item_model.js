@@ -28,9 +28,6 @@ const registerSchema = new mongoose.Schema(
       type: String,
     },
   },
-  {
-    timestamps: true,
-  }
 );
 
 const deviceSchema = new mongoose.Schema(
