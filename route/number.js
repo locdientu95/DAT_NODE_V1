@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const numberprocess = require("./numberprocess");
+const num = require("./numprocess");
 
 router.get("/", async (req, res) => {
-  const number = await numberprocess.getAll();
+  const number = await num.getAll();
   res.status(200).json(number);
 });
 
 router.put("/custom", async (req, res) => {
-  const number = await numberprocess.custom(
+  const number = await num.custom(
     req.body.width,
     req.body.height,
     req.body.unit
@@ -16,7 +16,7 @@ router.put("/custom", async (req, res) => {
 });
 
 router.put("/border", async (req, res) => {
-  const number = await numberprocess.border(
+  const number = await num.border(
     req.body.border,
     req.body.borderradius,
     req.body.bordercolor
@@ -25,7 +25,7 @@ router.put("/border", async (req, res) => {
 });
 
 router.put("/text", async (req, res) => {
-  const number = await numberprocess.text(
+  const number = await num.text(
     req.body.fontsize,
     req.body.bgcolor,
     req.body.textcolor
@@ -34,12 +34,12 @@ router.put("/text", async (req, res) => {
 });
 
 router.put("/posi", async (req, res) => {
-  const number = await numberprocess.posi(req.body.posi);
+  const number = await num.posi(req.body.posi);
   res.status(200).json(number);
 });
 
 router.put("/type", async (req, res) => {
-  const number = await numberprocess.type(req.body.type);
+  const number = await num.type(req.body.type);
   res.status(200).json(number);
 });
 

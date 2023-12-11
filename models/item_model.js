@@ -1,35 +1,33 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { type } = require("../route/numberprocess");
-const registerSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      unique: true,
-      require: (true, " Please insert a name"),
-    },
-    password: {
-      type: String,
-      require: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      require: true,
-    },
-    name: {
-      type: String,
-      require: true,
-    },
-    role: {
-      type: String,
-      default: "user",
-    },
-    avatar: {
-      type: String,
-    },
+
+const registerSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    unique: true,
+    require: (true, " Please insert a name"),
   },
-);
+  password: {
+    type: String,
+    require: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    require: true,
+  },
+  name: {
+    type: String,
+    require: true,
+  },
+  role: {
+    type: String,
+    default: "user",
+  },
+  avatar: {
+    type: String,
+  },
+});
 
 const deviceSchema = new mongoose.Schema(
   {
@@ -201,18 +199,17 @@ const imageupload = new mongoose.Schema({
 const historySchema = new mongoose.Schema({
   id: String,
   code: String,
-  data:
-  [
+  data: [
     {
       time: String,
       val_1: String,
       val_2: String,
-      val_3:String
-    }
+      val_3: String,
+    },
   ],
   date: String,
-})
-const History = mongoose.model("History",historySchema)
+});
+const History = mongoose.model("History", historySchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -221,7 +218,7 @@ const Dashboardbarchart = mongoose.model(
   dashboardbarchartSchema
 );
 const NumberH = mongoose.model("NumberH", numberhSchema);
-const Numbers = mongoose.model("Number", numberSchema);
+const Num = mongoose.model("Number", numberSchema);
 const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
@@ -247,8 +244,8 @@ module.exports = {
   NumberV,
   NumberH,
   Slider,
-  Numbers,
+  Num,
   ImageUpload,
   Tablepro,
-  History
+  History,
 };

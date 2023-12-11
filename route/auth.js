@@ -2,14 +2,6 @@ const router = require("express").Router();
 const authprocess = require("./authprocess");
 const verifyToken = require("./verify");
 
-// router.get("/dat?",async (req, res) => {
-//     let tai = req.query['tai']
-//     let phu = req.query['phu']
-//     console.log(tai,phu)
-//     const user = await authprocess.auth()
-//     res.status(200).json(user)
-// })
-
 router.get("/", async (req, res) => {
   const user = await authprocess.auth();
   res.status(200).json(user);
@@ -47,6 +39,11 @@ router.post("/UpdateImage", async (req, res) => {
 router.post("/getimg", async (req, res) => {
   const img = await authprocess.getImage(req.body.username);
   res.status(200).json(img);
+});
+
+router.put("/delete", async (req, res) => {
+  const user = await authprocess.deleteUser(req.body.username);
+  res.status(200).json(user);
 });
 
 module.exports = router;
