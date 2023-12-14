@@ -161,8 +161,10 @@ const getImage = (username) => {
 const deleteUser = (username) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await MD.Register.findOneAndUpdate({ username: username })
+      console.log(username);
+      await MD.Register.findOneAndDelete({ username: username })
         .then((data) => {
+          console.log(data);
           resolve({ status: true, data: data });
         })
         .catch((err) => {
