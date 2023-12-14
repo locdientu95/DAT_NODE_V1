@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const registerSchema = new mongoose.Schema({
   username: {
     type: String,
-    unique: true,
     require: (true, " Please insert a name"),
   },
   password: {
@@ -13,7 +12,6 @@ const registerSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
     require: true,
   },
   name: {
@@ -209,6 +207,7 @@ const historySchema = new mongoose.Schema({
   ],
   date: String,
 });
+
 const History = mongoose.model("History", historySchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
