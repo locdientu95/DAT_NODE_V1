@@ -13,6 +13,9 @@ const bar = require("./route/bar/bar");
 const switchtoggle = require("./route/switch/switch");
 const view32bit = require("./route/view32bit/view32bit");
 const view16bit = require("./route/view16bit/view16bit");
+const numberh = require("./route/numberh");
+const numberv = require("./route/numberv");
+const history = require("./route/history");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -54,3 +57,6 @@ app.use("/bar", bar);
 app.use("/switch", switchtoggle);
 app.use("/view32bit", view32bit);
 app.use("/view16bit", view16bit);
+app.use("/numberh", numberh);
+app.use("/numberv", numberv);
+app.use("/history", history);

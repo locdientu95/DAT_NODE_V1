@@ -1,46 +1,47 @@
 const router = require("express").Router();
-const numberprocess = require("./numberprocess");
+const lampprocess = require("./lampprocess");
 
 router.get("/", async (req, res) => {
-  const number = await numberprocess.getAll();
-  res.status(200).json(number);
+  const lamp = await lampprocess.getAll();
+  res.status(200).json(lamp);
 });
 
 router.put("/custom", async (req, res) => {
-  const number = await numberprocess.custom(
+  const lamp = await lampprocess.custom(
     req.body.width,
     req.body.height,
-    req.body.unit
+    req.body.fontsize
   );
-  res.status(200).json(number);
+  res.status(200).json(lamp);
+});
+
+router.put("/update", async (req, res) => {
+  const lamp = await lampprocess.update(
+    req.body.value,
+    req.body.text,
+    req.body.color,
+    req.body.bgcolor
+  );
+  res.status(200).json(lamp);
 });
 
 router.put("/border", async (req, res) => {
-  const number = await numberprocess.border(
+  const lamp = await lampprocess.border(
     req.body.border,
     req.body.borderradius,
     req.body.bordercolor
   );
-  res.status(200).json(number);
-});
-
-router.put("/text", async (req, res) => {
-  const number = await numberprocess.text(
-    req.body.fontsize,
-    req.body.bgcolor,
-    req.body.textcolor
-  );
-  res.status(200).json(number);
+  res.status(200).json(lamp);
 });
 
 router.put("/posi", async (req, res) => {
-  const number = await numberprocess.posi(req.body.posi);
-  res.status(200).json(number);
+  const lamp = await lampprocess.posi(req.body.posi);
+  res.status(200).json(lamp);
 });
 
-router.put("/type", async (req, res) => {
-  const number = await numberprocess.type(req.body.type);
-  res.status(200).json(number);
+router.get("/delete", async (req, res) => {
+  const lamp = await lampprocess.deletee(req.body.index);
+  res.status(200).json(lamp);
 });
 
 module.exports = router;

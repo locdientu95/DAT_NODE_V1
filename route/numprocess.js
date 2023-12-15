@@ -3,7 +3,7 @@ const DB = require("../models/item_model");
 const getAll = () => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Lamp.find({})
+      await DB.Num.find({})
         .then((u) => {
           res({ status: true, data: u });
         })
@@ -16,13 +16,13 @@ const getAll = () => {
   });
 };
 
-const custom = (width, height, fontsize) => {
+const custom = (width, height, unit) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Lamp.findByIdAndUpdate("656ed6710ef0561b0db37890", {
+      await DB.Num.findByIdAndUpdate("6576b14d2a7b5e9ce0145aa6", {
         width: width,
         height: height,
-        fontsize: fontsize,
+        unit: unit,
       })
         .then((data) => {
           console.log(data);
@@ -38,31 +38,10 @@ const custom = (width, height, fontsize) => {
   });
 };
 
-const update = (value, text, color, bgcolor) => {
-  return new Promise(async (res, rej) => {
-    try {
-      await DB.Lamp.findByIdAndUpdate("656ed6710ef0561b0db37890", {
-        value: value,
-        text: text,
-        color: color,
-        bgcolor: bgcolor,
-      })
-        .then((data) => {
-          res({ status: true, data });
-        })
-        .catch((err) => {
-          rej({ status: false, mess: "ERR" });
-        });
-    } catch (error) {
-      rej({ status: false, mes: "SYS ERR" });
-    }
-  });
-};
-
 const border = (border, borderradius, bordercolor) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Lamp.findByIdAndUpdate("656ed6710ef0561b0db37890", {
+      await DB.Num.findByIdAndUpdate("6576b14d2a7b5e9ce0145aa6", {
         border: border,
         borderradius: borderradius,
         bordercolor: bordercolor,
@@ -79,10 +58,30 @@ const border = (border, borderradius, bordercolor) => {
   });
 };
 
+const text = (fontsize, bgcolor, textcolor) => {
+  return new Promise(async (res, rej) => {
+    try {
+      await DB.Num.findByIdAndUpdate("6576b14d2a7b5e9ce0145aa6", {
+        fontsize: fontsize,
+        bgcolor: bgcolor,
+        textcolor: textcolor,
+      })
+        .then((data) => {
+          res({ status: true, data });
+        })
+        .catch((err) => {
+          rej({ status: false, mess: "ERR" });
+        });
+    } catch (error) {
+      rej({ status: false, mes: "SYS ERR" });
+    }
+  });
+};
+
 const posi = (posi) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Lamp.findByIdAndUpdate("656ed6710ef0561b0db37890", {
+      await DB.Num.findByIdAndUpdate("6576b14d2a7b5e9ce0145aa6", {
         posi: posi,
       })
         .then((data) => {
@@ -97,12 +96,14 @@ const posi = (posi) => {
   });
 };
 
-const deletee = (indexx) => {
+const type = (type) => {
   return new Promise(async (res, rej) => {
     try {
-      await DB.Lamp.find({ index: indexx })
+      await DB.Num.findByIdAndUpdate("6576b14d2a7b5e9ce0145aa6", {
+        type: type,
+      })
         .then((data) => {
-          res({ status: true, data: data });
+          res({ status: true, data });
         })
         .catch((err) => {
           rej({ status: false, mess: "ERR" });
@@ -117,7 +118,7 @@ module.exports = {
   getAll,
   custom,
   border,
-  update,
+  text,
   posi,
-  deletee,
+  type,
 };

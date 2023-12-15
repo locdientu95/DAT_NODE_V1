@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+<<<<<<< HEAD
 const registerSchema = new mongoose.Schema(
   {
     username: {
@@ -28,11 +29,33 @@ const registerSchema = new mongoose.Schema(
     avatar: {
       type: String,
     },
+=======
+const registerSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    require: (true, " Please insert a name"),
+>>>>>>> b2e37cc530b394270dd63d96224444aeeda56f84
   },
-  {
-    timestamps: true,
-  }
-);
+  password: {
+    type: String,
+    require: true,
+  },
+  email: {
+    type: String,
+    require: true,
+  },
+  name: {
+    type: String,
+    require: true,
+  },
+  role: {
+    type: String,
+    default: "user",
+  },
+  avatar: {
+    type: String,
+  },
+});
 
 const deviceSchema = new mongoose.Schema(
   {
@@ -90,9 +113,14 @@ const sliderSchema = new mongoose.Schema({
 });
 
 const lampSchema = new mongoose.Schema({
-  value: Number,
+  value: String,
   data: {
-    type: Object,
+    index: Number,
+    index: {
+      text: String,
+      color: String,
+      bgcolor: String,
+    },
   },
   width: String,
   height: String,
@@ -279,6 +307,21 @@ const View32bit = mongoose.model("View32bit", view32bitSchema);
 const Switch = mongoose.model("Switch", switchSchema);
 const Bar = mongoose.model("Bar", barSchema);
 const Button = mongoose.model("Button", buttonSchema);
+const historySchema = new mongoose.Schema({
+  id: String,
+  code: String,
+  data: [
+    {
+      time: String,
+      val_1: String,
+      val_2: String,
+      val_3: String,
+    },
+  ],
+  date: String,
+});
+
+const History = mongoose.model("History", historySchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -287,7 +330,7 @@ const Dashboardbarchart = mongoose.model(
   dashboardbarchartSchema
 );
 const NumberH = mongoose.model("NumberH", numberhSchema);
-const Numbers = mongoose.model("Number", numberSchema);
+const Num = mongoose.model("Number", numberSchema);
 const Lamp = mongoose.model("Lamp", lampSchema);
 const Slider = mongoose.model("Slider", sliderSchema);
 const Gauge = mongoose.model("Gauge", gaugeSchema);
@@ -313,7 +356,7 @@ module.exports = {
   NumberV,
   NumberH,
   Slider,
-  Numbers,
+  Num,
   ImageUpload,
   Tablepro,
   Button,
@@ -321,4 +364,5 @@ module.exports = {
   Switch,
   View32bit,
   View16bit,
+  History,
 };

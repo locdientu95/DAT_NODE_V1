@@ -18,29 +18,65 @@ const auth = () => {
   });
 };
 
+// const addUser = (username, password, email, name, role) => {
+//   return new Promise(async (res, rej) => {
+//     try {
+//       if (role == null || role != "admin") {
+//         role = "user";
+//       }
+//       let user = new MD.Register({
+//         username: username,
+//         password: password,
+//         email: email,
+//         name: name,
+//         role: role,
+//       });
+//       user
+//         .save()
+
+//         .then((data) => {
+//           console.log(data);
+//           res({ status: true });
+//         })
+
+//         .catch((err) => {
+//           console.log(err);
+//           rej({ status: false });
+//         });
+//     } catch (error) {
+//       rej({ status: false, mes: "err" });
+//     }
+//   });
+// };
+
 const addUser = (username, password, email, name, role) => {
   return new Promise(async (res, rej) => {
     try {
-      if (role == null || role != "admin") {
-        role = "user";
-      }
-      let user = new MD.Register({
-        username: username,
-        password: password,
-        email: email,
-        name: name,
-        role: role,
-      });
-      user
-        .save()
-
-        .then((data) => {
-          res({ status: true });
-        })
-
-        .catch((err) => {
-          rej({ status: false, mes: "DB ERR" });
+      let check = await MD.Register.find({ username: username} && {email: email}) 
+      if (check == null) {
+        if (role == null || role != "admin") {
+          role = "user";
+        }
+        let user = new MD.Register({
+          username: username,
+          password: password,
+          email: email,
+          name: name,
+          role: role,
         });
+        user
+          .save()
+          .then((data) => {
+            res({ status: true, message:"User added!" });
+          })
+
+          .catch((err) => {
+            console.log(err); 
+            rej({ status: false });
+          });
+      }else{
+        res({status:false, message: "This username or email have been used!"})
+      }
     } catch (error) {
       rej({ status: false, mes: "err" });
     }
@@ -65,70 +101,6 @@ const upload = (base64) => {
   });
 };
 
-// const Login = async (name, pass) => {
-//     try {
-//         console.log(name, pass);
-
-//         const user = await MD.Register.findOne({ username: name });
-
-//         if (user) {
-//             const valid = await user.isCheckPassword(pass);
-
-//             if (valid) {
-//                 console.log(valid);
-//                 return { status: true, mes: "Hello", data: user };
-//             } else {
-//                 return { status: false, mes: "Sai" };
-//             }
-//         } else {
-//             return { status: false, mes: "Không tìm thấy tài khoản" };
-//         }
-//     } catch (error) {
-//         return { status: false, mes: "Lỗi" };
-//     }
-// };
-
-// const Login = (name, pass) => {
-//     return new Promise((resolve, reject) => {
-//         console.log(name, pass);
-
-//         MD.Register.findOne({ username: name })
-//             .then((user) => {
-//                 if (user) {
-//                     checkPassword(user, pass)
-//                         .then((valid) => {
-//                             if (valid) {
-//                                 console.log(valid);
-//                                 resolve({ status: true, mes: "Hello", data: user });
-//                             } else {
-//                                 reject({ status: false, mes: "Sai" });
-//                             }
-//                         })
-//                         .catch((error) => {
-//                             reject({ status: false, mes: "Lỗi" });
-//                         });
-//                 } else {
-//                     reject({ status: false, mes: "Không tìm thấy tài khoản" });
-//                 }
-//             })
-//             .catch((error) => {
-//                 reject({ status: false, mes: "Lỗi" });
-//             });
-//     });
-// };
-
-// const checkPassword = (user, pass) => {
-//     return new Promise((resolve, reject) => {
-//         user.isCheckPassword(pass)
-//             .then((valid) => {
-//                 resolve(valid);
-//             })
-//             .catch((error) => {
-//                 reject(error);
-//             });
-//     });
-// };
-
 const Login = (username, pass) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -138,6 +110,7 @@ const Login = (username, pass) => {
             let isValid = await bcrypt.compare(pass, user.password);
             if (!isValid) {
               resolve({ status: false, mes: "Sai mật khẩu" });
+              next()
             } else {
               const token = jwt.sign(
                 {
@@ -166,6 +139,7 @@ const Login = (username, pass) => {
             }
           } else {
             resolve({ status: false, mes: "Không có username này" });
+            next()
           }
         })
         .catch((err) => {
@@ -186,7 +160,7 @@ const UpdateImage = (username, base64) => {
       )
         .then((user) => {
           if (user) {
-            resolve({ status: true , data:user});
+            resolve({ status: true, data: user });
           } else {
             resolve({ status: false });
           }
@@ -206,10 +180,28 @@ const getImage = (username) => {
       await MD.Register.findOne({ username: username })
         .then((user) => {
           if (user) {
-            resolve({ status: true, data:user });
+            resolve({ status: true, data: user });
           } else {
             resolve({ status: false });
           }
+        })
+        .catch((err) => {
+          reject({ status: false });
+        });
+    } catch (error) {
+      reject({ status: false, mes: "ERR" });
+    }
+  });
+};
+
+const deleteUser = (username) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log(username);
+      await MD.Register.findOneAndDelete({ username: username })
+        .then((data) => {
+          console.log(data);
+          resolve({ status: true, data: data });
         })
         .catch((err) => {
           reject({ status: false });
@@ -227,4 +219,5 @@ module.exports = {
   upload,
   UpdateImage,
   getImage,
+  deleteUser,
 };
