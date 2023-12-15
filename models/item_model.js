@@ -1,40 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-<<<<<<< HEAD
-const registerSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      unique: true,
-      require: (true, " Please insert a name"),
-    },
-    password: {
-      type: String,
-      require: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      require: true,
-    },
-    name: {
-      type: String,
-      require: true,
-    },
-    role: {
-      type: String,
-      default: "user",
-    },
-    avatar: {
-      type: String,
-    },
-=======
 const registerSchema = new mongoose.Schema({
   username: {
     type: String,
     require: (true, " Please insert a name"),
->>>>>>> b2e37cc530b394270dd63d96224444aeeda56f84
   },
   password: {
     type: String,
