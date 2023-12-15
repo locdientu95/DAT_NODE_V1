@@ -3,14 +3,16 @@ const cors = require("cors"); //Phân quyền truy cập
 const auth = require("./route/auth");
 const device = require("./route/device");
 const gauge = require("./route/gauge");
-const bardata = require("./route/bardata");
-const switchtoggle = require("./route/switchtoggle");
-const barchart = require("./route/barchart");
 const slider = require("./route/slider");
 const tablepro = require("./route/tablepro");
 const image = require("./route/image");
 const number = require("./route/number");
 const lamp = require("./route/lamp");
+const button = require("./route/button/button");
+const bar = require("./route/bar/bar");
+const switchtoggle = require("./route/switch/switch");
+const view32bit = require("./route/view32bit/view32bit");
+const view16bit = require("./route/view16bit/view16bit");
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -32,7 +34,7 @@ app.use(
       "http://172.16.0.162:81",
       "http://iot-dev.datgroup.com.vn:3700",
       "http://192.168.1.23",
-      "http://172.16.0.40",
+      "http://172.16.0.133:81",
     ],
   })
 );
@@ -42,11 +44,13 @@ app.use(methodOverride("_method"));
 app.use("/", auth);
 app.use("/device", device);
 app.use("/gauge", gauge);
-app.use("/bardata", bardata);
 app.use("/tablepro", tablepro);
-app.use("/switchtoggle", switchtoggle);
-app.use("/barchart", barchart);
 app.use("/slider", slider);
 app.use("/image", image);
 app.use("/number", number);
 app.use("/lamp", lamp);
+app.use("/button", button);
+app.use("/bar", bar);
+app.use("/switch", switchtoggle);
+app.use("/view32bit", view32bit);
+app.use("/view16bit", view16bit);

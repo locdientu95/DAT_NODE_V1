@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+
 const registerSchema = new mongoose.Schema(
   {
     username: {
@@ -160,17 +161,94 @@ const numbervSchema = new mongoose.Schema({
 
 const tablepro = new mongoose.Schema({
   width: String,
-  data: 
-    {
-      type: Array
-    },
-  head: 
-  {
-    type: Array
+  data: {
+    type: Array,
+  },
+  head: {
+    type: Array,
   },
   row: Number,
   col: Number,
 });
+
+const buttonSchema = new mongoose.Schema({
+  btntype: String,
+  coloron: String,
+  coloroff: String,
+  bgon: String,
+  bgoff: String,
+  texton: String,
+  textoff: String,
+  cal: String,
+  w: String,
+  h: String,
+  sizeon: String,
+  sizeoff: String,
+  txtcoloron: String,
+  txtcoloroff: String,
+  type: String,
+  radius: String,
+});
+
+const barSchema = new mongoose.Schema({
+  id: Number,
+  min: String,
+  max: String,
+  color: String,
+  scale: Number,
+  realdata: Number,
+  type: String,
+  w: String,
+  h: String,
+  bgcolor: String,
+  realdatacolor: String,
+});
+
+const switchSchema = new mongoose.Schema({
+  texton: String,
+  textoff: String,
+  bgon: String,
+  bgoff: String,
+  txtcoloron: String,
+  txtcoloroff: String,
+  textsize: Number,
+  w: String,
+  h: String,
+  border: String,
+  borderradius: String,
+  bordercolor: String,
+  borderradiusicon: String,
+});
+
+const view32bitSchema = new mongoose.Schema({
+  fontSize: String,
+  color: String,
+  alignItems: String,
+  justifyContent: String,
+  width: String,
+  height: String,
+  borderRadius: String,
+  backgroundColor: String,
+  borderColor: String,
+  display: String,
+  val1: Number,
+  val2: Number,
+});
+
+const view16bitSchema = new mongoose.Schema({
+  fontSize: String,
+  color: String,
+  alignItems: String,
+  justifyContent: String,
+  width: String,
+  height: String,
+  borderRadius: String,
+  backgroundColor: String,
+  borderColor: String,
+  display: String,
+  val: Number,
+});
+
 registerSchema.pre("save", async function (next) {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -196,6 +274,11 @@ const imageupload = new mongoose.Schema({
   image: String,
 });
 
+const View16bit = mongoose.model("View16bit", view16bitSchema);
+const View32bit = mongoose.model("View32bit", view32bitSchema);
+const Switch = mongoose.model("Switch", switchSchema);
+const Bar = mongoose.model("Bar", barSchema);
+const Button = mongoose.model("Button", buttonSchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
 const NumberV = mongoose.model("NumberV", numbervSchema);
@@ -233,4 +316,9 @@ module.exports = {
   Numbers,
   ImageUpload,
   Tablepro,
+  Button,
+  Bar,
+  Switch,
+  View32bit,
+  View16bit,
 };
