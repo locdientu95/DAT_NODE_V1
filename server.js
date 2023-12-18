@@ -3,14 +3,16 @@ const cors = require("cors"); //Phân quyền truy cập
 const auth = require("./route/auth");
 const device = require("./route/device");
 const gauge = require("./route/gauge");
-const bardata = require("./route/bardata");
-const switchtoggle = require("./route/switchtoggle");
-const barchart = require("./route/barchart");
 const slider = require("./route/slider");
 const tablepro = require("./route/tablepro");
 const image = require("./route/image");
 const number = require("./route/number");
 const lamp = require("./route/lamp");
+const button = require("./route/button/button");
+const bar = require("./route/bar/bar");
+const switchtoggle = require("./route/switch/switch");
+const view32bit = require("./route/view32bit/view32bit");
+const view16bit = require("./route/view16bit/view16bit");
 const numberh = require("./route/numberh");
 const numberv = require("./route/numberv");
 const history = require("./route/history");
@@ -28,16 +30,14 @@ app.use(
 
     origin: [
       "http://172.16.0.204",
-      "http://172.16.0.169:81",
+      "http://172.16.0.83:81",
       "http://172.16.0.144:81",
       "http://172.16.0.66",
-      "http://172.16.0.169",
+      "http://172.16.0.162",
+      "http://172.16.0.162:81",
       "http://iot-dev.datgroup.com.vn:3700",
       "http://192.168.1.23",
-      "http://172.16.0.40",
-      "http://172.16.0.59",
-      "http://172.16.0.79",
-      "http://172.16.0.106",
+      "http://172.16.0.133:81",
     ],
   })
 );
@@ -47,14 +47,16 @@ app.use(methodOverride("_method"));
 app.use("/", auth);
 app.use("/device", device);
 app.use("/gauge", gauge);
-app.use("/bardata", bardata);
 app.use("/tablepro", tablepro);
-app.use("/switchtoggle", switchtoggle);
-app.use("/barchart", barchart);
 app.use("/slider", slider);
 app.use("/image", image);
 app.use("/number", number);
 app.use("/lamp", lamp);
+app.use("/button", button);
+app.use("/bar", bar);
+app.use("/switch", switchtoggle);
+app.use("/view32bit", view32bit);
+app.use("/view16bit", view16bit);
 app.use("/numberh", numberh);
 app.use("/numberv", numberv);
 app.use("/history", history);

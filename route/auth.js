@@ -41,7 +41,7 @@ router.post("/getimg", async (req, res) => {
   res.status(200).json(img);
 });
 
-router.put("/delete", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   const user = await authprocess.deleteUser(req.body.username);
   res.status(200).json(user);
 });
