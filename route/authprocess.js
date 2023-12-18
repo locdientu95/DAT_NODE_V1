@@ -52,8 +52,8 @@ const auth = () => {
 const addUser = (username, password, email, name, role) => {
   return new Promise(async (res, rej) => {
     try {
-      let check = await MD.Register.find({ username: username} && {email: email}) 
-      if (check == null) {
+      var check = await MD.Register.findOne({username: username}) 
+      if (!check) {
         if (role == null || role != "admin") {
           role = "user";
         }
@@ -209,6 +209,29 @@ const deleteUser = (username) => {
     }
   });
 };
+
+const changePassword =(username,password)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+      await MD.Register.findOneAndUpdate(
+        { username: username },
+        { avatar: base64 }
+      )
+        .then((user) => {
+          if (user) {
+            resolve({ status: true, data: user });
+          } else {
+            resolve({ status: false });
+          }
+        })
+        .catch((err) => {
+          reject({ status: false });
+        });
+    } catch (error) {
+      reject({ status: false, mes: "ERR" });
+    }
+  });
+}
 
 module.exports = {
   auth,
