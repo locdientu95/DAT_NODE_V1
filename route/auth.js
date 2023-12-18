@@ -46,4 +46,8 @@ router.delete("/delete", async (req, res) => {
   res.status(200).json(user);
 });
 
+router.put("/changePassword", async(req,res)=>{
+  const user = await authprocess.changePassword(req.body.username,req.body.password)
+  res.status(200).json(user)
+})
 module.exports = router;

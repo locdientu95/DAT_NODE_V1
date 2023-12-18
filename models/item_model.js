@@ -259,17 +259,6 @@ registerSchema.pre("save", async function (next) {
   }
 });
 
-registerSchema.pre("findOneAndUpdate",async function(next){
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(this.password, salt);
-    this.password = hashPassword;
-    console.log(hashPassword);
-    next();
-  } catch (error) {
-    console.log(error);
-  }
-})
 registerSchema.methods.isCheckPassword = async function (password, next) {
   try {
     return await bcrypt.compare(password, this.password);

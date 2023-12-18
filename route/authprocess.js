@@ -214,12 +214,14 @@ const deleteUser = (username) => {
 
 const changePassword =(username,password)=>{
   return new Promise(async (resolve, reject) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
     try {
       await MD.Register.findOneAndUpdate(
         { username: username },
-        { avatar: base64 }
+        { password: hashPassword }
       )
-        .then((user) => {
+        .then(async(user) => {
           if (user) {
             resolve({ status: true, data: user });
           } else {
@@ -227,6 +229,7 @@ const changePassword =(username,password)=>{
           }
         })
         .catch((err) => {
+          console.log("Hello",err)
           reject({ status: false });
         });
     } catch (error) {
@@ -243,4 +246,5 @@ module.exports = {
   UpdateImage,
   getImage,
   deleteUser,
+  changePassword
 };
