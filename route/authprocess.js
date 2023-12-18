@@ -193,7 +193,7 @@ const changePassword = (username, password) => {
         { username: username },
         { password: hashPassword }
       )
-        .then(async(user) => {
+        .then(async (user) => {
           if (user) {
             resolve({ status: true, data: user });
           } else {
@@ -201,7 +201,7 @@ const changePassword = (username, password) => {
           }
         })
         .catch((err) => {
-          console.log("Hello",err)
+          console.log("Hello", err);
           reject({ status: false });
         });
     } catch (error) {
@@ -218,5 +218,5 @@ module.exports = {
   UpdateImage,
   getImage,
   deleteUser,
-  changePassword
+  changePassword,
 };
