@@ -18,41 +18,10 @@ const auth = () => {
   });
 };
 
-// const addUser = (username, password, email, name, role) => {
-//   return new Promise(async (res, rej) => {
-//     try {
-//       if (role == null || role != "admin") {
-//         role = "user";
-//       }
-//       let user = new MD.Register({
-//         username: username,
-//         password: password,
-//         email: email,
-//         name: name,
-//         role: role,
-//       });
-//       user
-//         .save()
-
-//         .then((data) => {
-//           console.log(data);
-//           res({ status: true });
-//         })
-
-//         .catch((err) => {
-//           console.log(err);
-//           rej({ status: false });
-//         });
-//     } catch (error) {
-//       rej({ status: false, mes: "err" });
-//     }
-//   });
-// };
-
 const addUser = (username, password, email, name, role) => {
   return new Promise(async (res, rej) => {
     try {
-      var check = await MD.Register.findOne({username: username}) 
+      var check = await MD.Register.findOne({ username: username });
       if (!check) {
         if (role == null || role != "admin") {
           role = "user";
@@ -67,15 +36,18 @@ const addUser = (username, password, email, name, role) => {
         user
           .save()
           .then((data) => {
-            res({ status: true, message:"User added!" });
+            res({ status: true, message: "User added!" });
           })
 
           .catch((err) => {
-            console.log(err); 
+            console.log(err);
             rej({ status: false });
           });
-      }else{
-        res({status:false, message: "This username or email have been used!"})
+      } else {
+        res({
+          status: false,
+          message: "This username or email have been used!",
+        });
       }
     } catch (error) {
       rej({ status: false, mes: "err" });
@@ -110,7 +82,7 @@ const Login = (username, pass) => {
             let isValid = await bcrypt.compare(pass, user.password);
             if (!isValid) {
               resolve({ status: false, mes: "Sai mật khẩu" });
-              next()
+              next();
             } else {
               const token = jwt.sign(
                 {
@@ -139,7 +111,7 @@ const Login = (username, pass) => {
             }
           } else {
             resolve({ status: false, mes: "Không có username này" });
-            next()
+            next();
           }
         })
         .catch((err) => {
@@ -212,7 +184,7 @@ const deleteUser = (username) => {
   });
 };
 
-const changePassword =(username,password)=>{
+const changePassword = (username, password) => {
   return new Promise(async (resolve, reject) => {
     try {
       await MD.Register.findOneAndUpdate(
@@ -233,7 +205,7 @@ const changePassword =(username,password)=>{
       reject({ status: false, mes: "ERR" });
     }
   });
-}
+};
 
 module.exports = {
   auth,
