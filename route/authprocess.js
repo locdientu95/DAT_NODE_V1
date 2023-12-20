@@ -228,7 +228,7 @@ const changePassword =(username,password,checkpassword)=>{
           let isValid = await bcrypt.compare(checkpassword, user.password);
             if (!isValid) {
               resolve({ status: false, mes: "Sai mật khẩu" });
-            }else{
+            }else{ 
               await MD.Register.findOneAndUpdate({username:user.username},{password:hashPassword})
               .then((usr)=>{
                 resolve({status:true, mes: "Successful"})
