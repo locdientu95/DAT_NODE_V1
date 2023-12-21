@@ -1,6 +1,33 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const devicedataSchema = new mongoose.Schema([
+  {
+    name: String,
+    description: String,
+    custom: String,
+    statement: Number,
+    gateway: String,
+    bu: String,
+    user: String,
+  },
+]);
+
+const projectdataSchema = new mongoose.Schema([
+  {
+    projectid: String,
+    name: String,
+    company: String,
+    info: String,
+    statement: Number,
+    custom: String,
+    long: String,
+    lat: String,
+    bu: String,
+    user: String,
+  },
+]);
+
 const registerSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -272,6 +299,8 @@ const imageupload = new mongoose.Schema({
   image: String,
 });
 
+const Devicedata = mongoose.model("Devicedata", devicedataSchema);
+const Projectdata = mongoose.model("Projectdata", projectdataSchema);
 const View16bit = mongoose.model("View16bit", view16bitSchema);
 const View32bit = mongoose.model("View32bit", view32bitSchema);
 const Switch = mongoose.model("Switch", switchSchema);
@@ -335,4 +364,6 @@ module.exports = {
   View32bit,
   View16bit,
   History,
+  Projectdata,
+  Devicedata,
 };
