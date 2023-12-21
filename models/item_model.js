@@ -1,6 +1,33 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const devicedataSchema = new mongoose.Schema([
+  {
+    name: String,
+    description: String,
+    custom: String,
+    statement: Number,
+    gateway: String,
+    bu: String,
+    user: String,
+  },
+]);
+
+const projectdataSchema = new mongoose.Schema([
+  {
+    projectid: String,
+    name: String,
+    company: String,
+    info: String,
+    statement: Number,
+    custom: String,
+    long: String,
+    lat: String,
+    bu: String,
+    user: String,
+  },
+]);
+
 const registerSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -274,6 +301,8 @@ const imageupload = new mongoose.Schema({
   image: String,
 });
 
+const Devicedata = mongoose.model("Devicedata", devicedataSchema);
+const Projectdata = mongoose.model("Projectdata", projectdataSchema);
 const View16bit = mongoose.model("View16bit", view16bitSchema);
 const View32bit = mongoose.model("View32bit", view32bitSchema);
 const Switch = mongoose.model("Switch", switchSchema);
@@ -293,6 +322,46 @@ const historySchema = new mongoose.Schema({
   date: String,
 });
 
+const errsettingSchema = new mongoose.Schema({
+  adddata:[
+    {
+      id: String,
+      addressCode: String,
+      addressState: String,
+      value: String
+    }
+  ],
+  infodata:[
+    {
+      id: String,
+      ErrCode: String,
+      ErrName: String,
+      ErrType: String,
+      info: String,
+      solution: String
+    }
+  ],
+  addDataRow: Number,
+  infoDataRow: Number,
+})
+
+const errorlogsSchema = new mongoose.Schema({
+      id: Number,
+      DeviceID: String,
+      ErrCode: String,
+      DeviceType: String,
+      ErrStt: String,
+      ErrType: String,
+      ProjectName: String,
+      Datetime: String,
+      read: {
+        type: Boolean,
+        default: true
+      }
+})
+
+const ErrorLogs = mongoose.model("Errorlogs",errorlogsSchema)
+const ErrSetting = mongoose.model("ErrSetting",errsettingSchema)
 const History = mongoose.model("History", historySchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
@@ -337,4 +406,8 @@ module.exports = {
   View32bit,
   View16bit,
   History,
+  Projectdata,
+  Devicedata,
+  ErrSetting,
+  ErrorLogs
 };

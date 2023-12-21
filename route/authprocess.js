@@ -40,7 +40,7 @@ const addUser = (username, password, email, name, role) => {
         user
           .save()
           .then((data) => {
-            res({ status: true, message: "User added!" });
+            res({ status: true, message: "Đăng ký thành công" });
           })
 
           .catch((err) => {
@@ -50,7 +50,7 @@ const addUser = (username, password, email, name, role) => {
       } else {
         res({
           status: false,
-          message: "This username or email have been used!",
+          message: "Tài khoản này đã có người sử dụng",
         });
       }
     } catch (error) {
@@ -196,15 +196,14 @@ const changePassword = (username, password, checkpassword) => {
       await MD.Register.findOne({ username: username })
         .then(async (user) => {
           let isValid = await bcrypt.compare(checkpassword, user.password);
-          if (!isValid) {
-            resolve({ status: false, mes: "Sai mật khẩu" });
-          } else {
-            await MD.Register.findOneAndUpdate(
-              { username: user.username },
-              { password: hashPassword }
-            )
-              .then((usr) => {
-                resolve({ status: true, mes: "Successful" });
+            if (!isValid) {
+              resolve({ status: false, mes: "Sai mật khẩu" });
+            }else{ 
+              await MD.Register.findOneAndUpdate({username:user.username},{password:hashPassword})
+              .then((usr)=>{
+                resolve({status:true, mes: "Successful"})
+              }).catch((err)=>{
+                reject({status:false, mes:"Update failed"})
               })
               .catch((err) => {
                 reject({ status: false, mes: "Update failed" });

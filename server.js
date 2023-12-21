@@ -16,6 +16,10 @@ const view16bit = require("./route/view16bit/view16bit");
 const numberh = require("./route/numberh");
 const numberv = require("./route/numberv");
 const history = require("./route/history");
+const projectdata = require("./route/projectdata/projectdata");
+const devicedata = require("./route/projectdata/devicedata");
+const errsetting = require("./route/errsetting")
+const errorlog = require("./route/errorlog")
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -37,6 +41,7 @@ app.use(
       "http://172.16.0.162:81",
       "http://iot-dev.datgroup.com.vn:3700",
       "http://192.168.1.23",
+      "http://172.16.0.160:81",
       "http://172.16.0.133:81",
       "http://172.16.0.106",
       "http://172.16.0.169:81",
@@ -63,3 +68,7 @@ app.use("/view16bit", view16bit);
 app.use("/numberh", numberh);
 app.use("/numberv", numberv);
 app.use("/history", history);
+app.use("/projectdata", projectdata);
+app.use("/devicedata", devicedata);
+app.use("/errsetting",errsetting);
+app.use("/errorlog",errorlog)
