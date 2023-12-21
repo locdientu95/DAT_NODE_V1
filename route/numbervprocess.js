@@ -25,9 +25,10 @@ const add = (header, data, col) => {
         col: col,
       })
         .then((u) => {
+          console.log(u.data);
           res({ status: true, data: u });
         })
-        .catch(() => {
+        .catch((err) => {
           rej({ status: false, mes: "err" });
         });
     } catch (error) {
@@ -55,7 +56,7 @@ const deleteCol = (header, data) => {
   });
 };
 
-const update = (header) => {
+const updateTit = (header) => {
   return new Promise(async (res, rej) => {
     try {
       await DB.NumberV.findByIdAndUpdate("65716b42068b213b63a21923", {
@@ -73,9 +74,28 @@ const update = (header) => {
   });
 };
 
+const updateData = (data) => {
+  return new Promise(async (res, rej) => {
+    try {
+      await DB.NumberV.findByIdAndUpdate("65716b42068b213b63a21923", {
+        data: data,
+      })
+        .then((u) => {
+          res({ status: true, data: u });
+        })
+        .catch(() => {
+          rej({ status: false, mes: "err" });
+        });
+    } catch (error) {
+      rej({ status: false, mes: "err" });
+    }
+  });
+};
+
 module.exports = {
   getAll,
   add,
   deleteCol,
-  update,
+  updateTit,
+  updateData,
 };

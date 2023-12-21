@@ -142,19 +142,21 @@ const dashboardbarchartSchema = new mongoose.Schema({
 const numbervSchema = new mongoose.Schema({
   row: Number,
   col: Number,
-  header: [
-    {
-      name: String,
-      code: String,
-    },
-  ],
-  data: [
-    {
-      id: Number,
-      label: String,
-      label_1: String,
-    },
-  ],
+  header: { type: Array },
+  // [
+  //   {
+  //     name: String,
+  //     code: String,
+  //   },
+  // ],
+  data: { type: Array },
+  // [
+  //   {
+  //     id: Number,
+  //     label: String,
+  //     label_1: String,
+  //   },
+  // ],
 });
 
 const tablepro = new mongoose.Schema({

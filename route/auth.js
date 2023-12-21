@@ -41,13 +41,18 @@ router.post("/getimg", async (req, res) => {
   res.status(200).json(img);
 });
 
-router.delete("/delete", async (req, res) => {
+router.post("/delete", async (req, res) => {
   const user = await authprocess.deleteUser(req.body.username);
   res.status(200).json(user);
 });
 
-router.put("/changePassword", async(req,res)=>{
-  const user = await authprocess.changePassword(req.body.username,req.body.password,req.body.checkpassword)
-  res.status(200).json(user)
-})
+router.put("/changePassword", async (req, res) => {
+  const user = await authprocess.changePassword(
+    req.body.username,
+    req.body.password,
+    req.body.checkpassword
+  );
+  res.status(200).json(user);
+});
+
 module.exports = router;

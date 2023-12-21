@@ -176,7 +176,7 @@ const deleteUser = (username) => {
       console.log(username);
       await MD.Register.findOneAndDelete({ username: username })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           resolve({ status: true, data: data });
         })
         .catch((err) => {

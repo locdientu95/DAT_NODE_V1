@@ -6,7 +6,7 @@ router.get("/", async (req, res) => {
   res.status(200).json(numberv);
 });
 
-router.post("/add", async (req, res) => {
+router.put("/add", async (req, res) => {
   const numberv = await numbervprocess.add(
     req.body.header,
     req.body.data,
@@ -23,8 +23,13 @@ router.put("/delete", async (req, res) => {
   res.status(200).json(numberv);
 });
 
-router.put("/update", async (req, res) => {
-  const numberv = await numbervprocess.update(req.body.header);
+router.put("/updateTit", async (req, res) => {
+  const numberv = await numbervprocess.updateTit(req.body.header);
+  res.status(200).json(numberv);
+});
+
+router.put("/updateData", async (req, res) => {
+  const numberv = await numbervprocess.updateData(req.body.data);
   res.status(200).json(numberv);
 });
 
