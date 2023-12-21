@@ -323,45 +323,45 @@ const historySchema = new mongoose.Schema({
 });
 
 const errsettingSchema = new mongoose.Schema({
-  adddata:[
+  adddata: [
     {
       id: String,
       addressCode: String,
       addressState: String,
-      value: String
-    }
+      value: String,
+    },
   ],
-  infodata:[
+  infodata: [
     {
       id: String,
       ErrCode: String,
       ErrName: String,
       ErrType: String,
       info: String,
-      solution: String
-    }
+      solution: String,
+    },
   ],
   addDataRow: Number,
   infoDataRow: Number,
-})
+});
 
 const errorlogsSchema = new mongoose.Schema({
-      id: Number,
-      DeviceID: String,
-      ErrCode: String,
-      DeviceType: String,
-      ErrStt: String,
-      ErrType: String,
-      ProjectName: String,
-      Datetime: String,
-      read: {
-        type: Boolean,
-        default: true
-      }
-})
+  id: Number,
+  DeviceID: String,
+  ErrCode: String,
+  DeviceType: String,
+  ErrStt: String,
+  ErrType: String,
+  ProjectName: String,
+  Datetime: String,
+  read: {
+    type: Boolean,
+    default: true,
+  },
+});
 
-const ErrorLogs = mongoose.model("Errorlogs",errorlogsSchema)
-const ErrSetting = mongoose.model("ErrSetting",errsettingSchema)
+const ErrorLogs = mongoose.model("Errorlogs", errorlogsSchema);
+const ErrSetting = mongoose.model("ErrSetting", errsettingSchema);
 const History = mongoose.model("History", historySchema);
 const Register = mongoose.model("Register", registerSchema);
 const Device = mongoose.model("Device", deviceSchema);
@@ -409,5 +409,5 @@ module.exports = {
   Projectdata,
   Devicedata,
   ErrSetting,
-  ErrorLogs
+  ErrorLogs,
 };
