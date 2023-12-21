@@ -40,7 +40,7 @@ const addUser = (username, password, email, name, role) => {
         user
           .save()
           .then((data) => {
-            res({ status: true, message: "User added!" });
+            res({ status: true, message: "Đăng ký thành công" });
           })
 
           .catch((err) => {
@@ -50,7 +50,7 @@ const addUser = (username, password, email, name, role) => {
       } else {
         res({
           status: false,
-          message: "This username or email have been used!",
+          message: "Tài khoản này đã có người sử dụng",
         });
       }
     } catch (error) {

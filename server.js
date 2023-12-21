@@ -16,6 +16,8 @@ const view16bit = require("./route/view16bit/view16bit");
 const numberh = require("./route/numberh");
 const numberv = require("./route/numberv");
 const history = require("./route/history");
+const errsetting = require("./route/errsetting")
+const errorlog = require("./route/errorlog")
 const app = express();
 const server = require("http").createServer(app); //Khai báo server
 server.listen(process.env.PORT || 3000); // Khởi chạy server
@@ -62,3 +64,5 @@ app.use("/view16bit", view16bit);
 app.use("/numberh", numberh);
 app.use("/numberv", numberv);
 app.use("/history", history);
+app.use("/errsetting",errsetting);
+app.use("/errorlog",errorlog)
